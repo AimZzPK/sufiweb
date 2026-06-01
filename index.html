@@ -7,20 +7,18 @@
 <title>Naqshbandi App</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(160deg, #022c22, #000);
-  color: white;
+body { margin: 0; 
+  font-family: 'Segoe UI', sans-serif; 
+  background: linear-gradient(160deg, #022c22, #000); 
+  color: white; 
 }
 
 .container {
   padding: 20px;
-  padding-bottom: 90px;
+  padding-bottom: 120px; /* 👈 more space for navbar */
   max-width: 900px;
   margin: auto;
 }
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -95,11 +93,92 @@ body {
 
 /* FOOTER */
 footer {
-    text-align: center;
-    padding: 20px;
-    background: #021d14;
+  text-align: center;
+  padding: 20px;
+  background: #021d14;
+
+  margin-bottom: 100px; /* 👈 pushes it ABOVE navbar */
 }
 
+.banner {
+  width: 100%;
+  height: 60vh;
+  position: relative;
+  overflow: hidden;
+  margin-top: 40px;
+}
+
+/* Make it smaller on phones */
+@media (max-width: 600px) {
+  .banner {
+    height: 50vh;
+  }
+}
+
+.slider {
+  position: absolute;
+  width: 180px;
+  height: 220px;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-style: preserve-3d;
+  animation: autoRun 40s linear infinite;
+}
+
+@media (min-width: 900px) {
+  .slider {
+    width: 220px;
+    height: 260px;
+  }
+}
+
+@keyframes autoRun {
+  from {
+    transform: translateX(-50%) perspective(1000px) rotateY(0deg);
+  }
+  to {
+    transform: translateX(-50%) perspective(1000px) rotateY(360deg);
+  }
+}
+
+.item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+
+  backdrop-filter: blur(10px);
+
+  transform:
+    rotateY(calc((var(--position) - 1) * (360deg / var(--quantity))))
+    translateZ(320px);
+}
+
+/* Arabic text */
+.dua {
+  font-size: 22px;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+@media (min-width: 900px) {
+  .dua {
+    font-size: 26px;
+  }
+}
+
+.item span {
+  font-size: 13px;
+  opacity: 0.8;
+}
 </style>
 </head>
 
@@ -125,17 +204,50 @@ footer {
     <a href="#" class="card feature">N.V.T</a>
     <a href="#" class="card feature">N.V.T</a>
   </div>
-
-</div>
-    <footer>
+  <footer>
         © 2026 Naqshbandi Sufi | Waseem Idoe
         </footer>
+        <div class="banner">
+  <div class="slider" style="--quantity:6;">
 
+    <div class="item" style="--position:1;">
+      <p class="dua">اللّهُـمَّ اغْفِـرْ لِي</p>
+      <span>O Allah, forgive me</span>
+    </div>
+
+    <div class="item" style="--position:2;">
+      <p class="dua">سُبْحَانَ اللّهِ</p>
+      <span>Glory be to Allah</span>
+    </div>
+
+    <div class="item" style="--position:3;">
+      <p class="dua">الْحَمْدُ لِلّهِ</p>
+      <span>All praise is for Allah</span>
+    </div>
+
+    <div class="item" style="--position:4;">
+      <p class="dua">اللّهُ أَكْبَر</p>
+      <span>Allah is the Greatest</span>
+    </div>
+
+    <div class="item" style="--position:5;">
+      <p class="dua">لَا إِلٰهَ إِلَّا اللّهُ</p>
+      <span>There is no god but Allah</span>
+    </div>
+
+    <div class="item" style="--position:6;">
+      <p class="dua">رَبِّ زِدْنِي عِلْمًا</p>
+      <span>My Lord, increase me in knowledge</span>
+    </div>
+
+  </div>
+</div>
       <!-- NAVBAR -->
     <div class="navbar">
     <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
     <a href="home.html" class="nav-item"><span>📘</span>Handleiding</a>
     <a href="quran.html" class="nav-item"><span>🤲</span>Quran</a>
+    </div>
 
 <script>
 let prayerData = {};
