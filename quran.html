@@ -304,6 +304,31 @@ main{
   .surah-arabic-name{font-size:19px}
   .ayah-arabic{font-size:22px}
 }
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-item {
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-item span {
+  display: block;
+  font-size: 20px;
+}
 </style>
 </head>
 <body>
@@ -360,6 +385,12 @@ main{
     </div>
   </div>
 </div>
+  <!-- NAVBAR -->
+    <div class="navbar">
+    <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
+    <a href="home.html" class="nav-item"><span>📘</span>Handleiding</a>
+    <a href="quran.html" class="nav-item"><span>🤲</span>Quran</a>
+    </div>
 
 <script>
 const $ = id => document.getElementById(id);
@@ -565,7 +596,7 @@ function goBack(){
   $('headerLogo').textContent='🕌';
   $('headerLogo').style.background='var(--accent-dim)';
   $('headerLogo').style.border='1px solid rgba(74,222,128,0.2)';
-  $('headerTitle').textContent='Al-Quran';
+  $('headerTitle').textContent='Naqshbandi-Sufi App';
   $('headerMeta').textContent='114 Surahs';
   currentSurahData=null;audioIds=[];
 }
