@@ -156,41 +156,43 @@ footer {
 @media (max-width: 600px) {
 
   .banner {
-    height: auto;
-    margin-top: 20px;
-    padding: 10px;
+    height: 55vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .slider {
-    position: static;
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 10px;
+    width: 140px;
+    height: 180px;
 
-    transform: none !important;
-    animation: none !important;
+    top: auto;
+    left: auto;
+    transform: perspective(600px);
+    animation: autoRunMobile 25s linear infinite;
   }
 
-  .slider::-webkit-scrollbar {
-    display: none;
+  @keyframes autoRunMobile {
+    from {
+      transform: perspective(600px) rotateY(0deg);
+    }
+    to {
+      transform: perspective(600px) rotateY(360deg);
+    }
   }
 
   .item {
-    min-width: 160px;
-    height: auto;
-
-    transform: none !important;
-
-    flex-shrink: 0;
+    transform:
+      rotateY(calc((var(--position) - 1) * (360deg / var(--quantity))))
+      translateZ(140px); /* 👈 smaller depth */
   }
 
   .dua {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .item span {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 
