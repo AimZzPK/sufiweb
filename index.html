@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+    <link rel="icon" type="image/jpeg" href="logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naqshbandi App</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(160deg, #022c22, #000);
+  color: white;
+}
+
+.container {
+  padding: 20px;
+  padding-bottom: 90px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 22px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.prayer {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.active {
+  background: rgba(16, 185, 129, 0.3);
+}
+
+.countdown {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+}
+
+.feature {
+  text-align: center;
+  padding: 25px;
+  text-decoration: none;
+  color: white;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-item {
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-item span {
+  display: block;
+  font-size: 20px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #021d14;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h2>Naqshbandi Sufi</h2>
+    <button onclick="getLocation()" style="background-color:#021d14; border: solid; border-radius: 50px; cursor: pointer; color: white;">📍</button>
+  </div>
+
+  <!-- PRAYER TIMES -->
+  <div class="card">
+    <h3>Gebedstijden</h3>
+    <div id="countdown" class="countdown"></div>
+    <div id="prayers">Laden...</div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div class="grid">
+    <a href="#" class="card feature">N.V.T</a>
+    <a href="#" class="card feature">N.V.T</a>
+    <a href="#" class="card feature">N.V.T</a>
+  </div>
+
+</div>
+    <footer>
+        © 2026 Naqshbandi Sufi | Waseem Idoe
+        </footer>
+
+      <!-- NAVBAR -->
+    <div class="navbar">
+    <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
+    <a href="home.html" class="nav-item"><span>📘</span>Handleiding</a>
+    <a href="quran.html" class="nav-item"><span>🤲</span>Quran</a>
+
+<script>
+let prayerData = {};
+let notified = false;
+
+// GET NEXT PRAYER
+function getNextPrayer() {   
+  const now = new Date();
+  let next = null;
+
+  for (let key in prayerData) {
+    const [h, m] = prayerData[key].split(":");
+    const time = new Date();
+    time.setHours(h, m, 0);
+
+    if (time > now) {
+      next = { name: key, time };
+      break;
+    }
+  }
+
+  return next;
+}
+
+// COUNTDOWN
+function updateCountdown() {
+  const next = getNextPrayer();
+  if (!next) return;
+
+  const now = new Date();
+  const diff = next.time - now;
+
+  const h = Math.floor(diff / 1000 / 60 / 60);
+  const m = Math.floor((diff / 1000 / 60) % 60);
+
+  document.getElementById("countdown").innerText =
+    `Volgende: ${next.name} over ${h}u ${m}m`;
+}
+
+// FETCH TIMES
+async function getPrayerTimes(lat, lon) {
+  const container = document.getElementById("prayers");
+  container.innerHTML = "Laden...";
+
+  const url = `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const t = data.data.timings;
+
+  prayerData = {
+    Fajr: t.Fajr,
+    Dhuhr: t.Dhuhr,
+    Asr: t.Asr,
+    Maghrib: t.Maghrib,
+    Isha: t.Isha
+  };
+
+  container.innerHTML = "";
+  const now = new Date();
+
+  Object.keys(prayerData).forEach(p => {
+    const [h, m] = prayerData[p].split(":");
+    const time = new Date();
+    time.setHours(h, m);
+
+    const div = document.createElement("div");
+    div.className = "prayer";
+
+    if (Math.abs(now - time) < 60 * 60 * 1000) {
+      div.classList.add("active");
+    }
+
+    div.innerHTML = `<span>${p}</span><span>${prayerData[p]}</span>`;
+    container.appendChild(div);
+  });
+
+  setInterval(updateCountdown, 1000);
+}
+
+// LOCATION
+function getLocation() {
+  navigator.geolocation.getCurrentPosition(pos => {
+    getPrayerTimes(pos.coords.latitude, pos.coords.longitude);
+  });
+}
+
+// DEFAULT (Amsterdam-ish)
+getPrayerTimes(52.37, 4.90);
+
+// 🔔 ADHAN + NOTIFICATION
+function playAdhan() {
+  const audio = new Audio("https://cdn.islamic.network/audio/adhan/adhan1.mp3");
+  audio.play();
+}
+
+function checkAdhan() {
+  const now = new Date();
+  const current = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0");
+
+  Object.keys(prayerData).forEach(prayer => {
+    if (prayerData[prayer] === current && !notified) {
+      notified = true;
+
+      if (Notification.permission === "granted") {
+        new Notification(`Tijd voor ${prayer} 🕌`);
+      }
+
+      playAdhan();
+    }
+  });
+
+  setTimeout(() => notified = false, 60000);
+}
+
+setInterval(checkAdhan, 1000);
+
+// REQUEST PERMISSION
+if ("Notification" in window) {
+  Notification.requestPermission();
+}
+</script>
+
+</body>
+</html>

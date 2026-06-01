@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+    <meta charset="UTF-8">
+        <link rel="icon" type="image/jpeg" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+
+    <title>Naqshbandi App</title>
+
+<style>
+html { scroll-behavior: smooth; }
+
+:root {
+    --bg-main: #020805;
+    --bg-elevated: rgba(6, 64, 43, 0.6);
+
+    --primary: #00e676;
+    --primary-soft: rgba(0, 230, 118, 0.15);
+
+    --text-main: #e8f5e9;
+    --text-secondary: #a5d6a7;
+
+    --blur: blur(14px);
+    --radius: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #020805;
+    color: #e8f5e9;
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(180deg, #06402B, #021d14);
+}
+
+header h1 {
+    font-size: 32px;
+    background: linear-gradient(90deg, #00e676, #00c853);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+/* HAMBURGER */
+.menu-toggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 26px;
+    color: #00e676;
+    z-index: 3000;
+    cursor: pointer;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    height: 100vh;        /* volle hoogte van scherm */
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #021d14;
+    padding: 80px 20px 20px 20px; /* duwt “Menu” naar beneden */
+    overflow-y: auto;     /* ✅ scrollen mogelijk */
+    -webkit-overflow-scrolling: touch; /* smooth scroll op iOS */
+    transition: 0.3s;
+    z-index: 2000;
+}
+
+
+.sidebar a {
+    display: block;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    transition: all 0.25s ease;
+}
+
+.sidebar a:hover {
+    background: var(--primary);
+    color: black;
+    transform: translateX(5px);
+}
+
+
+
+/* MAIN */
+main {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+/* SECTIONS */
+section {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 32px;
+
+    border-radius: var(--radius);
+
+    background: var(--bg-elevated);
+    backdrop-filter: var(--blur);
+
+    border: 1px solid var(--primary-soft);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.6),
+        inset 0 0 20px rgba(255,255,255,0.03);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.8);
+}
+
+section {
+    max-width: 720px;
+    margin: 40px auto;
+    padding: 32px;
+
+    border-radius: var(--radius);
+
+    background: var(--bg-elevated);
+    backdrop-filter: var(--blur);
+
+    border: 1px solid var(--primary-soft);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.6),
+        inset 0 0 20px rgba(255,255,255,0.03);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.8);
+}
+
+/* BUTTON */
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    border-radius: 999px;
+
+    background: rgba(0, 230, 118, 0.1);
+    color: var(--primary);
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid var(--primary-soft);
+
+    font-weight: 500;
+
+    transition: all 0.25s ease;
+}
+
+.download-btn:hover {
+    background: var(--primary);
+    color: black;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-item {
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-item span {
+  display: block;
+  font-size: 20px;
+}
+
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #021d14;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+      .menu-toggle { display: block; }
+    .sidebar { transform: translateX(-100%); } /* start buiten scherm */
+    .sidebar.active { transform: translateX(0); }
+    main { margin-left: 0; }
+    }
+
+</style>
+    </head>
+    <body>
+
+        <div class="menu-toggle" onclick="toggleMenu()">
+    <i class="ri-menu-line"></i>
+</div>
+        <header>
+        <img src="logo.png" style="width:50px;">
+        <h1>Naqshbandi Sufi </h1>
+        <p>Volledige Handleiding & Programma</p>
+
+        </header>
+   <aside class="sidebar" id="sidebar">
+        <h2>Menu</h2>
+        <br>
+        <p> © 2026 Naqshbandi Sufi | Waseem Idoe</p>
+        <br>
+        <a href="#download">Download</a>
+        <a href="#intro">Intro</a>
+        <a href="#grand">Grand-Sheikh</a>
+        <a href="#sheikh">Onze Sheikh</a>
+        <a href="#doel">Doel</a>
+        <a href="#punten">11 Punten</a>
+        <a href="#waziefah">Waziefah</a>
+        <a href="#programma">Programma</a>
+        <a href="#khatme">Khatme</a>
+        <a href="#kuk">KuK</a>
+        <a href="#sadjrah">Sadjrah</a>
+        <a href="#doeroed">Doeroed</a>
+        <a href="#burdah">Burdah</a>
+    </aside>
+
+    <main>
+        <section id="download">
+            <h2>Download de volledige handleiding als PDF</h2>
+            <a href="kuk aangepast sajra.pdf" download class="download-btn" target="_blank"><i class="ri-download-2-line"></i>
+ Download PDF</a>
+
+        </section>
+
+        <section id="intro">
+
+        <h2>Introductie</h2>
+        <p>Introductie:
+        Alle lof is aan Allah جل جلاله. Zegeningen en vredesgroeten zijn op Zijn Beste Creatie en op zijn voorouders,
+        ouders, familie, metgezellen, opvolgers en op diegenen die een martelaar zijn geworden op Zijn Weg.
+        Allah, de Meest Hoge, heeft in de Koran in Soerah Maa’idah vers 35 *5;35+ gezegd: “O jij, die gelooft!
+        Vrees Allah en zoek een weg tot toenadering tot Hem(Waseelah) en strijdt voor Zijn zaak, opdat je
+        moge slagen.”
+        De Boodschapper van Allah صلى الله عليه وسلم heeft gezegd: “Een persoon zal herrezen worden met diegenen die hij
+        lief heeft.” [Overgeleverd in Bukhari en Muslim].
+        Hij صلى الله عليه وسلم heeft ook gezegd: “Een persoon heeft hetzelfde geloof als zijn vriend. Wees dus voorzichtig met
+        welke vriendschappen je behoudt.” [Overgeleverd in Abu Dawud]
+        Hazrat Kwaaja Baha’uddin Shah Naqshband, moge Allahجل جلاله tevreden met hem zijn, heeft eens gezegd:
+        “Wie dan ook ingewijd is bij ons (m.a.w. wie bay’at heeft gedaan bij ons) en ons liefheeft en ons volgt.
+        Of diegene nou ver of dichtbij is, waar hij dan ook is, of het nou in het oosten of in het westen is.
+        We zullen hem voeden met stroming der liefde en zullen hem in zijn dagelijkse leven voorzien van
+        licht.”
+        Hazrat Imam-e-Rabbani Mujaddid Alf-e-Sani, moge Allahجل جلاله tevreden met hem zijn, heeft eens gezegd:
+        “Het meest duidelijke verschil tussen de ware vrienden van Allahجل جلاله en de leugenaars is dat hun
+        woorden en daden altijd volgens de Shariat zijn. En de harten van diegenen die met hen zijn, zijn
+        gevuld met angst en liefde voor Allahجل جلاله en zij interesseren zich voor niets anders. Dit zijn tekenen
+        die te zien zijn op de mensen die in contact staan met de vrienden van Allah. Diegene die geen
+        relatie hebben met hen zijn beroofd van alles!” [ Maktubat Imam-e-Rabbani, Deel 2, brief 92] </p>
+        </section>
+        <section id="grand">
+
+            <h2>Onze Grand-Sheikh</h2>
+            <p>
+                Onze Grand-Sheikh:
+        Onze Grand-Sheikh, (de Sheikh van onze Sheikh) Zijne Eminentie Hazrat Kwaaja Sufi Muhammad
+        Aslam (Qibla-e-Alam) (Moge Allahجل جلاله tevreden met hem zijn), was een onzelfzuchtige man met
+        eindeloze gunsten en liefdevolle vrijgevigheid. Hij bracht de prachtige boodschap van Islam in 1963
+        naar de kusten van het Verenigd Koninkrijk. Hij werkte onvermoeibaar, dag en nacht, om de zikr van
+        Allahجل جلاله en van zijn Gezegende Profeet صلى الله عليه وسلم in de harten van ontelbaar veel mensen te planten. Hiermee
+        bracht hij leven in ‘overleden harten’ en hielp hij hen innerlijke rust te bereiken.
+        De werkstijl van Qibla-e-Alam was er één van simpelheid, bescheidenheid, standvastigheid aan de
+        Sunnah en het wegblijven van het hetgeen verboden is (het Haraam). Hij sprak niet veel, maar zijn
+        stille wijsheden en prachtige visie vulden de harten van de mensen om hem heen met diepe liefde
+        voor Allah جل جلاله en zijn Boodchapper صلى الله عليه وسلم. Hij verliet het aardse leven in 1999 en is nu begraven in
+        Shadpur Sharief, Jhelum in Pakistan. Deze grootse Kwajaah liet voor ons een ongeëvenaarde erfenis
+        achter, in de vorm van zijn tareeqah –wellicht een van de meest succesvolle in het Verenigd Koninkrijk
+        en Europa.
+        Moge Allahجل جلاله zijn rang verhogen en zijn tareeqah tot het einde der dagen in leven houden. Amien! 
+            </p>
+        </section>
+        <section id="sheikh">
+
+            <h2>Onze Sheikh</h2>
+            <p>Onze Sheikh:
+        Hazrat Kwaaja Sufi Arshad Mahmood(Moge Allahجل جلاله hem nog een lang leven schenken) is één van de
+        hoofd-Khalifah van zijn Sheikh. Hazrat sahib heeft 27 jaar lang aan de voeten van zijn meester gezeten
+        en heeft vele praktische en spirituele lessen van hem hebben mogen opdoen.
+        Onze Sheikh doet zijn werk in onze Tareeqah al sinds 1999, sinds het heengaan van Qibla-e-Alam. Met
+        de wil van Allah, de Meest Hoge, heeft Hazrat sahib het leven van duizenden mensen wereldwijd
+        veranderd. Hij heeft dit bereikt door de gehele wereld over te reizen, de mensheid te dienen en de
+        boodschap van Islam te verspreiden. </p>
+        </section>
+        <section id="doel">
+        <h2>Ultieme Doel</h2>
+        <p>Ultieme doel:
+        Qibla-e-Alam, Kwaaja Sufi Muhammad Aslam, heeft eens tegen zijn Murideen (Studenten) gezegd:
+        “Ik heb jullie pure melk geschonken, in de vorm van het gedenken van de Almachtige Allah. En
+        honing in de vorm van liefde voor de Geliefde Profeet صلى الله عليه وسلم , dus wil jij dit ook niet voor je broeders?”
+        Het ultieme doel van elke Zoeker in deze tareeqah is om zichzelf te reinigen ( Tazkiyah-e-Nafs) en om
+        anderen uit te nodigen (door middel van Dawaah) op deze pad der liefde.s
+        </section>
+
+        <section id="punten">
+
+        <h2>11 Punten voor een Mureed</h2>
+        <p>
+        11 punten waar een mureed/ ‘zoeker’ aan zou moeten voldoen:<br>
+        1. Probeer altijd in een staat van Woezoe (reinheid) te zijn.<br>
+        2. Lees 5 keer per dag je Namaaz (gebed) en indien mogelijk lees elke gebed in Djamaat (in
+        moskee of in groepsverband).<br>
+        3. Verricht dagelijks je ‘Qada-e-‘Umri’. Dit wil zeggen probeer dagelijks je gemiste gebeden in te
+        halen (van heel je leven).<br>
+        4. Lees je Wazifah elke dag voor, of na, Fajr. Als dit niet mogelijk is, lees het dan gedurende de
+        gehele dag. Als het maar afgerond is voor het Isha gebed.<br>
+        5. Lees dagelijks de Fajr Khatme Kwajagaan, Sadjrah en Doeroed omwille van je Murshied
+        (Sheikh), je ouders en voor de gehele Ummah. Doe dit voor of na het Fajr gebed. Het is
+        mogelijk dit zelfstandig te doen, maar ook in groepsverband.<br>
+        6. Als men loopt moet men bij elke stap met de rechtervoet ‘Allah’ zeggen en bij elke stap met
+        de linkervoet ‘Hu’. Op dezelfde manier moet je ook in slaap vallen. Door in te ademen met
+        ‘Allah’ en uit te ademen met ‘Hu’.<br>
+        7. Lees dagelijks de Maghrieb Khatme Kwajagaan, Sadjrah en doeroed omwille van je Murshied
+        (Sheikh), je ouders en voor de gehele Ummah. Doe dit voor of na het Maghrib gebed. Het is
+        mogelijk dit zelfstandig te doen, maar ook in groepsverband.<br>
+        8. Probeer elke dag de dagelijkse deel van Dalail-ul-Khairaat te lezen.<br>
+        9. Lees dagelijks doeroed op onze geliefde Profeet صلى الله عليه وسلم en denk vaak aan Zijn grootsheid.<br>
+        10. Maak het je gewoonte om je dagelijks te houden aan de gegeven opdrachten (waziefah,
+        khatme kwajagaans, etc.) en ook om de gebruiken van de Kwajagan(meervoud van Kwajaa)
+        jezelf aan te leren. Mocht je het een dag vergeten te doen, of er niet toe in staat zijn, probeer
+        het dan zo snel mogelijk in te halen.<br> 
+        11. Neem deel aan de wekelijkse bijeenkomsten in jouw stad of gemeente.
+        </p>
+        </section>
+
+        <section id="waziefah">
+
+        <h2>Waziefah</h2>
+        <p>
+        Waziefah (wat dagelijks gelezen moet worden):<br>
+        De volgende Waziefah is noodzakelijk voor elke mureed(van de Naqshbandi Mujaddidi Aslami Arshadi
+        stroming/tareeqah)<br>
+        om dagelijks gelezen te worden, voor of na het Fajr gebed. Mocht je hier niet toe
+        in staat zijn lees het dan verdeeld over de gehele dag, zolang het maar voor het Isha-gebed afgerond
+        is.<br>
+        (100 keer)<br>
+        Sall-Allahu ‘Ala Habibihi Muhammadiw-wa Alihi wa As-Habihi wa Sallam.<br>
+        God’s vrede en zegeningen zijn op Zijn Geliefde Muhammad صلى الله عليه وسلم en op zijn Familie en op zijn
+        Metgezellen.<br>
+        (300 keer)<br>
+        Ya Hayyu Ya Qayyum.<br>
+        Oh Eeuwiglevende! Oh Zelfbestaande!<br>
+        (100 keer)<br>
+        Sall-Allahu ‘Ala Habibihi Muhammadiw-wa Alihi wa As-Habihi wa Sallam.<br>
+        God’s vrede en zegeningen zijn op Zijn Geliefde Muhammad صلى الله عليه وسلم en op zijn Familie en op zijn
+        Metgezellen.<br>
+        Dus lees 
+        <br>100 keer Daroed-e-Khizri, <br>300 keer Ya Hayyoe Ya Qayoem<br> en eindig met 100 keer Daroed-eKhizri.
+        <br>
+        Na het lezen zou een persoon in zijn handen moeten blazen en zijn (of haar) handen vegen over het
+        gezicht, hart en dan het rest van het lichaam. Deze Waziefah is een duah, maar werkt ook als een
+        medicijn. Mocht iemand in problemen(of stress of iets dergelijks) zitten, is het aangeraden om de
+        Wazifah ook dan te lezen. 
+        </p>
+
+        </section>
+
+        <section id="programma">
+
+        <h2>Programma Opzet</h2>
+        <p>
+        Opzet van het programma in onze Tareeqah:
+        Zoals eerder gezegd is het een doel van een mureed in deze Halqa, om zichzelf te reinigen en
+        anderen uit te nodigen om deze ‘Pad der Liefde’ te bewandelen met ons. Alhamdoellilaah zijn
+        onze wekelijkse bijenkomsten bij uitstek de juiste handvaten hiervoor. We reinigen onszelf door
+        gezamenlijk de Khatme Kwajagaan, Sadjrah, Zikr en Doeroed te reciteren. Ma shaa Allah is
+        iedereen welkom bij onze bijeenkomsten, niet alleen de murideen( de studenten), zodat
+        iedereen kan proeven van de melk en de honing die onze Kwajagaan ons hebben geschonken.
+        De opzet van onze bijeenkomsten zien er anders uit, dan wij gewend zijn in onze Nederlandse
+        Surinaamse Islamitische gemeenschap. In plaats van de gewoonlijke Tilawat, Naat, Salaat-oSalaam en duah volgorde, is bij ons de volgorde en manier van doen anders.
+        We beginnen met de Khatme Kwajagaan, dit is een samenstelling van lofprijzingen naar
+        Allah جل جلاله, verzen uit de Heilige Quraan en een aantal keer Daroed-e-Khizri. Hierna lezen wij onze
+        Sadjrah- sharif, waarna we luidop Zikr zullen doen onder begeleiding van de Zimidaar(de door
+        Hazrat Saheb aangewezen leider van elke regio) of onder degene die daarvoor aangewezen is.
+        Vervolgens doen we een Doeroed sessie, om onze harten na de Zikr wat rust te geven. Hiermee
+        is onze programma klaar en is het gewoon in onze tareeqah om de Qaseedah Burdah voor te
+        dragen. Hierna zal het normale programma verdergaan, met eventueel Naat Sharief en
+        toespraken van onze Oelamah of broeders in shaa Allah.
+        </p>
+        </section>
+
+        <section id="khatme">
+
+        <h2>Wat is de Khatme Kwajagaan (KuK)?</h2>
+        <p>
+        In de Naqshbandi tareeqah zijn er twee zaken die heel belangrijk zijn en die een mureed nooit 
+zou mogen laten. Het ene is de dagelijkse Waziefah en het andere is de groeps-Zikr, de Khatme 
+Kwajagaan.  
+De ‘Zegel van de Meesters der Wijsheid’ is het ultieme gereedschap voor een ‘zoeker’ in zijn 
+spirituele speurtocht. Het is een samenbundeling van heilige verzen uit de Koran en 
+smeekbedes uit de Koran; prachtige namen en prachtige eigenschappen van de Almachtige  
+Allah en vredesgroeten (doeroed) op de Nobele Boodschapper ﷺ.  
+De Khatme Kwajagaan is samengesteld en geschonken aan ons door de Kwajagaan, onze 
+Meesters der Wijsheid. Dit opdat wij, als ‘zoekers’ ons zelf kunnen ontstijgen van het dagelijkse 
+leven en ons in het Hemelse Hof kunnen presenteren, daar waar ook onze gebeden worden 
+gepresenteerd. Wanneer de Khatme Kwajagaan met oprechtheid, uiterste concentratie en 
+toewijding wordt gelezen, zal de Khatme Kwajagaan al onze benodigdheden vervullen. Zowel in 
+deze wereld, als in het leven hierna.  
+  
+De wortels van de Heilige Khatme Kwajagaan zijn terug te leiden naar de oprichter van de 
+Kwajagaan-levensstijl, Kwaaja ‘Abdul Khaliq Gujdawani (Moge Allahﷻ tevreden met hem zijn). 
+Hij heeft dit verkregen als een gift, rechtstreek van onze Geliefde Profeet  ﷺ. Hij was de eerste 
+Meester, van de Gouden Keten (Sadjrah) die de Khatam reciteerde. Elke keer als een mureed de 
+KuK reciteert, zal dat dus doen dankzij de spirualiteit van Kwaaja ‘Abdul Khaliq Gujdawani 
+(Moge Allahﷻ tevreden met hem zijn) en hij zal dan dus ook profiteren van de zegeningen die 
+we hiermee in shaa Allah zullen verkrijgen.  
+In de loop der jaren hebben velen andere Naqshbandi meesters de Khatme  
+Kwajagaan aangepast, naar behoeftes van de murideen die het reciteerden. Hafiz Abdul Kareem 
+(Moge Allah ﷻ tevreden met hem zijn) is degene die de Khatme Kwajagaan compleet heeft 
+gemaakt, precies op de manier hoe we het vandaag kennen. Toen Hafiz Abdul Kareem de Khatme 
+Kwajagaan presenteerde in de heilige Rawda in Madinah Sharief kreeg hij een visioen van de 
+Profeet ﷺ . De Profeet  ﷺ vertelde aan hem dat de Khatme Kwajagaan die Hafiz  
+Abdul Kareem (Moge Allahﷻ  tevreden met hem zijn) in het hof van de Nabi  ﷺ voorgedragen 
+had, de waarde,zegeningen en voordelen heeft van 360 volledig uitgelezen Koran Shariefs. Het is 
+gezegd dat als men de Khatme Kwajagaan tweemaal zou reciteren, dat het hart van de reciteur 
+hiermee heel veel rust zou verkrijgen en die persoon zich nog dichterbij Allah ﷻ zal voelen.  
+Om elke ‘zoeker’ een kans te geven spiritueel te groeien, is het van belang om eenheid te 
+hebben in de manier en wijze van het reciteren van de Khatme Kwajagaan.  
+  
+</p>
+        </section>
+        <section id="kuk">
+            <h2>de KuK van Maghrieb: begin</h2>
+            <p>
+        ​(7 keer Surah Fatihah)<br>
+        بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَنِ الرَّحِيمِ ۝ مَلِكِ يَوْMِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ ۝
+        ​(100 keer Durood-e-Khidri)<br>
+        صَلَّى اللّٰهُ عَلٰی حَبِیْبِہٖ مُحَمَّدٍ وَّآلِہٖ وَسَلَّمَ<br>
+        ​(79 of 7 keer Surah Al-Inshirah)<br>
+        بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ<br>
+        أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ ۝ وَوَضَعْنَا عَنكَ وِزْرَكَ ۝ الَّذِي أَنقَضَ ظَهْرَكَ ۝ وَرَفَعْنَا لَكَ ذِكْرَكَ ۝ فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ۝ إِنَّ مَعَ الْعُسْرِ يُسْرًا ۝ فَإِذَا فَرَغْتَ فَانصَبْ ۝ وَإِلَى رَبِّكَ فَارْغَب ۝
+        ​(1001 of 10 keer Surah Al-Ikhlas)<br>
+        بِسْم. اللَّهِ الرَّحْمَنِ الرَّحِيمِ<br>
+        قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ۝
+        ​(7 keer Surah Fatihah)<br>
+        بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ<br>
+        الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَنِ الرَّحِيمِ ۝ مَلِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ ۝
+        ​(100 keer Durood-e-Khidri)<br>
+        صَلَّى اللّٰهُ عَلٰی حَبِیْبِہٖ مُحَمَّدٍ وَّآلِہٖ وَسَلَّمَ<br>
+        ​يَا قَاضِیَ الْحَاجَاتِ<br>
+        يَا كَافِیَ الْمُهِمَّاتِ<br>
+        يَا دَافِعَ الْبَلِیَّاتِ<br>
+        يَا رَافِعَ الدَّرَجَاتِ<br>
+        يَا شَافِیَ الْاَمْرَاضِ<br>
+        يَا مُجِیْبَ الدَّعَواتِ<br>
+        يَا مُفَتِّحَ الْاَبْوَابِ<br>
+        يَا لَطِیْفُ يَا لَطِیْفُ<br>
+        يَا اَمَانَ الْخَائِفِیْنَ اَغِثْنِیْ<br>
+            </p>    
+        </section>
+        <section id="sadjrah">
+        <h2>Sadjrah (Gouden Keten)</h2>
+        <p> <strong> A’udhu Billahi Minash-Shaytanir-Rajim. <br>Bismillahir-Rahmanir-Rahim. <br>
+Alaa Inna Awliya Allahi La Khaufun ‘Alayhim wa Laa Hum Yahzanun.<br>
+Alladhina Amany wa Kanu Yattaqun. </strong><br>
+(Zeker, Gods helpers hebben niets te vrezen, noch 
+zullen zij bedroefd zijn,  
+die geloofden en godvrezend waren.)  <br>
+  <br>
+Oh Ontwerper en Schepper van het universum, ontwerp en vorm mijn hart. <br>
+Vorm mij op zodanige wijze dat wanneer mensen mij zien, zij mij als een ware 
+Naqshbandi zien.  <br>
+<br>  
+Oh Allah ﷻ, We doen een beroep op uw Grootsheid en smeken om Uw Gunsten, 
+omwille van Uw hoogste en beste schepping, de Profeet ﷺ .  <br>
+Vergeef onze fouten omwille van de Profeten en vergeef onze fouten ter wille van 
+de grote Meesters van De Naqshbandi orde.  <br>
+  <br>
+Wij zijn Uw Hof der genade niet waard, oh Vergevingsgezinde Heer.<br> Daarom 
+smeken wij U via deze Heiligen, die in Uw aanwezigheid zijn.  <br>
+  <br>
+Hazrat Abu Bakr Siddeeq, de meester van de waarheid en de metgezel van de <br>
+Profeet ﷺ in degrot. Hazrat Salmaan Faris, die overspoeld was met liefde voor <br>
+de Koning van alle Leiders.  <br>
+  <br>
+Hazrat Qaasim en Hazrat Imam Ja’far Saadiq; Bayazeed, de verkozene en de <br><br>
+uitzonderlijke imam Abu’l Hassan.  <br>
+  <br>
+Abu ‘ali Farmadi en Yusuf Hamdaanwi; ‘Abdul Khaaliq Gujdawaani en ‘Arif <br>
+Riwagaari.  <br>
+  <br>
+De sufi meester Mahmood Faghnawi , de perfecte Sufi Koning ‘Azeezaa(n); Hazrat <br>
+Baba Samaasi en Sayyid Ameer Kulaal.  <br>
+ <br> 
+De verlichtende Zon van de Naqsbhani-orde, Khwaja Shah Baha’uddien en de <br>
+Gever, de heilige Hazrat Khwaja ‘Alaa’udeen ‘At’taar.  <br>
+  <br>
+De sufi koning Ya’qoob en ‘Ubaydullah Ahraar, de grote meester van zijn tijd. De <br>
+perfecte Zaahid en de edele Durwaysh Muhammad.  <br>
+  <br>
+Khwaaja Amkangi en de befaamde Hazrat Baaqi Billah, de stevige houvast van <br>
+Sirhind en de hervormer van de tweede milennium.  <br>
+  <br>
+Khwaaja Ma’soom, de volledig zuivere Hazrat Hujjatullah, de voortreffelijke <br>
+Hazrat Zubayr en de pure Khwaaja Ashraf Muhammad.  <br>
+  <br>
+De sufi koningen van alle heiligen, Hazrat Jamālullāh en ‘Īsā Muhammad. Hazrat <br>
+Khwāja Fayzullāh en Hazrat Nūr met oprechte geloof.  <br>
+  <br>
+Begunstig ons in de naam van Bābā Faqīr Muhammad ,die voor ons een teken <br>
+is van het paradijs. Zijn licht is te bewonderen op het voorhoofd van mijn <br>
+Meester.  <br>
+  <br>
+Hazrat Hāfiz ‘Abdul Kareem, de vrijgevige en de zoon van de gulle. Zijn gunsten <br>
+zijn wijdverspreid en hij is onze gids in beiden werelden.  <br>
+Wees ons genadig middels de unieke gids van ons prachtige religie. Degene die <br>
+gezegend is met een spirituele visie... , Hazrat Khwaja Sufi Nawabuddin!  <br>
+  <br>
+Moge mijn leven gewijd zijn aan zo een mooie naam; zijn zegeningen zijn <br>
+verspreid over de gehele wereld.  <br>
+  <br>
+Oh Allahﷻ, wees mij genadig omwille van de meester der begeleiding; Ter wille <br>
+van de geliefde van Allāhﷻ ...Hazrat Khwaja Sufi Muhammad Aslam!!  <br>
+Zijn hart loopt over met liefde voor de Uitverkoren Profeet ﷺ. Zijn hart is verlicht <br>
+en zijn gezicht straalt, Oh wat een prachtig zicht!  <br>
+  <br>
+Deze werkelijkheid is over de hele wereld zichtbaar; zijn zegeningen blijven Azië <br>
+en Europa steeds meer verlichten.  <br>
+  <br>
+Oh Allahﷻ,vergeef mij met de Waseelah van onze Uitverkoren Profeet ﷺ en <br>
+omwille van de perfecte gids... Hazrat Khwaja Sufi Arshad Mahmud!!  <br>
+  <br>
+De kroon van heiligheid is boven zijn hoofd, zijn hart is stralend en zijn gezicht <br>
+schijnt als een bloeiende roos.  <br>
+  <br>
+Zijn zegeningen en vrijgevigheid zijn in zo een staat; op wie hij een blik werpt <br>
+wordt overvloedig rijk aan zegeningen.  <br>
+  <br>
+Oh Allāh, Mogen de afleidingen van wereldse gedachten ver van ons zijn. Geef <br>
+ons met Uw liefde en Uw tevredenheid een goed einde [dood].  </p>
+        </section>
+
+        <section id="doeroed">
+
+        <h2>Doeroed Sessie</h2>
+        <p>
+            Doeroed sessie:
+        Om onze vurige harten na de zikr af te koelen hebben wij in onze tareeqah een doeroed-sessie.
+        Hierbij gelden dezelfde regels als bij de Khatme Kwajagaan. De begeleider reciteert eerst een
+        daroed, waarna de luisteraars deze daroed na-reciteren. Het is dus van belang dat de luisteraars
+        stil zijn en luisteren naar wat de reciteur voordraagt. Na de doeroed-sessie zal de voordrager de
+        sessie van Kalma Tayyiba inluiden. De zimidaar zal dit overnemen, tenzij hij anders aangeeft.<br>
+        Allahumma Salli ‘Ala Sayyidina, Salli ‘Ala Muhammadin.<br>
+        Oh Allah! Vredeszegeningen zijn op onze Meester! Vredeszegeningen zijn op Muhammad!<br>
+        Salli ‘Ala Nabiyyina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Profeet! Vredeszegeningen zijn op Muhammad!<br>
+        Salli ‘Ala Habibina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Geliefde! Vredeszegeningen zijn op Muhammad!<br>
+        Salli ‘Ala Karimina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Meest Vrijgevige! Vredeszegeningen op Muhammad!<br>
+        Salli ‘Ala Rasulina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Boodschapper! Vredeszegeningen op Muhammad!<br>
+        Salli ‘Ala Mahbubina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Meest Geliefde! Vredeszegeningen op Muhammad!<br>
+        Salli ‘Ala Nurina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Licht! Vredeszegeningen op Muhammad!<br>
+        Salli ‘Ala Hudhurina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Eerwaardige! Vredeszegeningen op Muhammad!<br>
+        Salli ‘Ala Shafiyyina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Bemiddelaar! Vredeszegeningen op Muhammad!<br>
+        Salli ‘Ala Madaniyyina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Profeet van Madinah! Vredeszegeningen op Muhammad!<br>
+        Salli ‘Ala Rahmatina, Salli ‘Ala Muhammadin.<br>
+        Vredeszegeningen zijn op onze Genade! Vredeszegeningen op Muhammad!
+        </p>
+        </section>
+
+        <section id="burdah">
+
+        <h2>Qaseedah Burdah</h2>
+        <br>
+        <p>
+Alhumdo Lillaahe Munshil Khalqe Min Adami<br>
+Thum Mas Salaato Alal Mukhtaare Fil Qadami<br><br>
+
+Moula Ya Salli Wasallim Daaeman Abadan<br>
+A'la Habibi ka Khayril Khalqi Kullihimi<br><br>
+
+Muhammadun sayyidul kawnayni wa'thaqalain<br>
+wal fariqayni min urbin wa min ajami<br><br>
+
+Nabiyyunal amiru nahi fa la ahadun<br>
+abarra fi qawli la minhu wa la na'ami<br><br>
+
+Huwal Habibul-Lazi Turja Shafaa'atuhu<br>
+Li Kulli Hawlim-Min al Ahwaali Muqtahimi<br><br>
+
+Da'aa Ilallahi Fal Mustamsikuna Bihi<br>
+Mustamsikuna Bi Hablin Ghayri Munfasimi<br><br>
+
+Faaqan Nabiyyina Fi Khalqin Wa fi Khuluqin<br>
+Wa Lam Yudanuhu Fi Ilmin Wa la Karami<br><br>
+
+Wa kulluhum mir Rasoolillahi multamisun<br>
+Gharfam min al bahri o rashfam mi al diyami<br><br>
+
+Ya Akram al Khaliqi Ma li man aludhu Bihi<br>
+Siwaka inda hululil hadeethil amami<br><br>
+
+Ya Rabbi Bil Mustafa Balligh Maqasidana<br>
+Waghfir Lana Ma Mada ya Wasi Al Karami<br><br>
+
+Fa inna min judika dunya wa darrataha<br>
+Wa min uloomika ilm al lawhi wal qalami<br><br>
+
+Thummar rida An Abi Bakrin' wa An Umar'aa<br>
+Wa An Aliyyin Wa An Uthman'aa dhil Karami<br><br>
+
+Wal Aale Wa Sahbi thumma Tabi'ina Lahum<br>
+Ahli tuka Wannuka Wal Hilmi Wal Karami<br><br>
+
+Faghfir Lina Shididha Waghfir Li Qari'iha<br>
+Sa'al Tu kal Khayra Ya-zhal Joodi Wal Karami
+</p>
+        </section>
+    </main>
+        <!-- NAVBAR -->
+    <div class="navbar">
+    <a href="index.html" class="nav-item"><span>🏠</span>Home</a>
+    <a href="home.html" class="nav-item"><span>📘</span>Handleiding</a>
+    <a href="quran.html" class="nav-item"><span>🤲</span>Quran</a>
+    </div>
+        <footer>
+        © 2026 Naqshbandi Sufi | Waseem Idoe
+        </footer>
+    </body>
+
+    <script>
+const sections = document.querySelectorAll("section");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = "translateY(0)";
+    }
+  });
+}, { threshold: 0.1 });
+
+sections.forEach(sec => {
+  sec.style.opacity = 0;
+  sec.style.transform = "translateY(40px)";
+  sec.style.transition = "0.6s ease-out";
+  observer.observe(sec);
+});
+
+
+function toggleMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const menuIcon = document.querySelector(".menu-toggle i");
+
+    const isOpen = sidebar.classList.toggle("active");
+
+    if (isOpen) {
+        menuIcon.classList.replace("ri-menu-line", "ri-close-line");
+    } else {
+        menuIcon.classList.replace("ri-close-line", "ri-menu-line");
+    }
+}
+
+
+document.querySelectorAll(".sidebar a").forEach(link => {
+    link.addEventListener("click", () => {
+        const sidebar = document.getElementById("sidebar");
+        const icon = document.querySelector(".menu-toggle i");
+
+        sidebar.classList.remove("active");
+        icon.classList.replace("ri-close-line", "ri-menu-line");
+    });
+});
+
+
+
+
+
+// klik op sidebar links sluit menu
+document.querySelectorAll(".sidebar a").forEach(link => {
+    link.addEventListener("click", () => {
+        document.getElementById("sidebar").classList.remove("active");
+        document.querySelector(".overlay").classList.remove("active");
+        document.querySelector(".menu-toggle i").classList.remove("ri-close-line");
+        document.querySelector(".menu-toggle i").classList.add("ri-menu-line");
+    });
+});
+
+
+
+</script>
+
+</html>
