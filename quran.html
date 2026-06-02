@@ -93,7 +93,7 @@ body::after {
 }
 .header-logo{
   width:34px;height:34px;border-radius:10px;
-  background:var(--accent-dim);
+  background:var(--bg);
   border:1px solid rgba(74,222,128,0.2);
   display:flex;align-items:center;justify-content:center;
   font-size:18px;flex-shrink:0;
@@ -673,7 +673,7 @@ function goBack(){
   $('listView').style.display='block';
   $('backBtn').style.display='none';
   $('headerLogo').innerHTML = `<img src="logo.png" alt="logo">`;
-  $('headerLogo').style.background='var(--accent-dim)';
+  $('headerLogo').style.background='var(--bg)';
   $('headerLogo').style.border='1px solid rgba(74,222,128,0.2)';
   $('headerTitle').textContent='Naqshbandi App';
   $('headerMeta').textContent='114 Surahs';
