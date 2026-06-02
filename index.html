@@ -20,6 +20,20 @@
   --glass-border: rgba(255,255,255,0.1);
   --text: #f0fdf4;
   --text-muted: rgba(240,253,244,0.55);
+  --bg-card: rgba(14, 36, 20, 0.75);
+  --bg-card-hover: rgba(20, 48, 28, 0.9);
+  --border: rgba(0, 200, 100, 0.12);
+  --border-hover: rgba(0, 200, 100, 0.28);
+  --primary: #3de89a;
+  --primary-dim: rgba(61, 232, 154, 0.15);
+  --primary-dim2: rgba(61, 232, 154, 0.08);
+  --gold: #c9a84c;
+  --gold-dim: rgba(201, 168, 76, 0.15);
+  --text: #dff0e5;
+  --text-muted: #7aad8f;
+  --text-dim: #4a7a5e;
+  --radius: 16px;
+  --radius-sm: 10px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -273,6 +287,8 @@ body::after {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  scroll-behavior: smooth;
+
 }
 
 .carousel-track::-webkit-scrollbar { display: none; }
@@ -287,6 +303,7 @@ body::after {
   scroll-snap-align: start;
   position: relative;
   overflow: hidden;
+  flex: 0 0 85%; /* iets nicer voor slide */
 }
 
 .dua-card::after {
@@ -573,13 +590,13 @@ footer strong {
 
 <!-- FOOTER -->
 <footer>
-  © 2026 <strong>Naqshbandi Sufi</strong> | Waseem Idoe
+  © 2026 <strong>Naqshbandi Sufi</strong> | W.Idoe
 </footer>
 
   <!-- NAVBAR -->
    <nav class="navbar">
-  <a href="index.html" class="nav-item"><i class="ri-home-4-line"></i>Home</a>
-  <a href="home.html" class="nav-item active"><i class="ri-book-2-line"></i>Handleiding</a>
+  <a href="index.html" class="nav-item active"><i class="ri-home-4-line"></i>Home</a>
+  <a href="home.html" class="nav-item"><i class="ri-book-2-line"></i>Handleiding</a>
   <a href="quran.html" class="nav-item"><i class="ri-quill-pen-line"></i>Quran</a>
 </nav>
 
@@ -719,6 +736,8 @@ function checkAdhan() {
 
 setInterval(checkAdhan, 1000);
 if ("Notification" in window) Notification.requestPermission();
+
+
 </script>
 </body>
 </html>
