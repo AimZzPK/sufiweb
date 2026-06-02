@@ -449,6 +449,46 @@ footer strong {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.madhab-toggle {
+  position: relative;
+  display: flex;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  padding: 3px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.madhab-slider {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--green-bright), #34d399);
+  transition: transform 0.35s cubic-bezier(.4,1.4,.6,1);
+  box-shadow: 0 0 12px rgba(16,185,129,0.4);
+}
+
+.madhab-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  padding: 6px 0;
+  border-radius: 999px;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.25s ease;
+}
+
+.madhab-btn.active {
+  color: #022c22;
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -466,7 +506,17 @@ footer strong {
 
   <!-- PRAYER TIMES -->
   <div class="card fade-in">
-    <div class="card-title">Gebedstijden</div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+  <div class="card-title">Gebedstijden</div>
+
+  <div class="madhab-toggle">
+  <div class="madhab-slider"></div>
+
+  <button class="madhab-btn active" onclick="changeMadhab('1', 0)">Hanafi</button>
+  <button class="madhab-btn" onclick="changeMadhab('0', 1)">Jumhur</button>
+</div>
+</div>
     <div id="countdown" class="countdown">Laden...</div>
     <div id="prayers" class="prayers-list">
       <div class="loading-shimmer"></div>
@@ -570,6 +620,7 @@ footer strong {
 </nav>
 
 <script>
+  let currentMadhab = localStorage.getItem("madhab") || "1";
 let prayerData = {};
 let notified = false;
 
@@ -630,7 +681,7 @@ async function getPrayerTimes(lat, lon) {
   const container = document.getElementById("prayers");
 
   try {
-    const url = `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2&school=1`;
+    const url = `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2&school=${currentMadhab}`;
     const res = await fetch(url);
     const data = await res.json();
     const t = data.data.timings;
@@ -659,6 +710,28 @@ async function getPrayerTimes(lat, lon) {
     setInterval(updateCountdown, 1000);
   } catch (e) {
     container.innerHTML = '<div style="color:rgba(255,255,255,0.5);font-size:13px;">Kon tijden niet laden. Controleer uw verbinding.</div>';
+  }
+}
+function changeMadhab(val, index) {
+  currentMadhab = val;
+  localStorage.setItem("madhab", val);
+
+  // slider bewegen
+  const slider = document.querySelector(".madhab-slider");
+  slider.style.transform = `translateX(${index * 100}%)`;
+
+  // active text
+  document.querySelectorAll(".madhab-btn").forEach((btn, i) => {
+    btn.classList.toggle("active", i === index);
+  });
+
+  // reload tijden
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      getPrayerTimes(pos.coords.latitude, pos.coords.longitude);
+    }, () => {
+      getPrayerTimes(52.07, 4.30);
+    });
   }
 }
 
@@ -705,8 +778,12 @@ function checkAdhan() {
 
 setInterval(checkAdhan, 1000);
 if ("Notification" in window) Notification.requestPermission();
+document.getElementById("madhabSelect").value = currentMadhab;
 
-
+window.addEventListener("DOMContentLoaded", () => {
+  const index = currentMadhab === "1" ? 0 : 1;
+  changeMadhab(currentMadhab, index);
+});
 </script>
 </body>
 </html>

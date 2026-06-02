@@ -430,7 +430,7 @@ footer .strong2 {
       <div class="stat-chip"><b>114</b> Surahs</div>
       <div class="stat-chip"><b>6,236</b> Ayahs</div>
       <div class="stat-chip"><b>30</b> Juz</div>
-      <div class="stat-chip"><b>86</b> Meccan · <b>28</b> Medinan</div>
+      <div class="stat-chip"><b>86</b> Mekkaans · <b>28</b> Medina</div>
     </div>
     <div id="surahList" class="surah-list"></div>
   </div>
@@ -543,7 +543,7 @@ function loadSurah(num, meta){
   $('surahView').innerHTML=`<div class="loading"><div class="spinner"></div>Loading verses…</div>`;
   audioIds=[];currentIndex=0;currentAudio=null;currentSurahData=meta;
 
-  fetch(`https://api.alquran.cloud/v1/surah/${num}/editions/quran-uthmani,en.asad`)
+  fetch(`https://api.alquran.cloud/v1/surah/${num}/editions/quran-uthmani,nl.siregar`)
   .then(r=>r.json())
   .then(data=>{
     const ar=data.data[0], en=data.data[1];
@@ -551,7 +551,7 @@ function loadSurah(num, meta){
       <h2>${ar.englishName}</h2>
       <div style="font-family:var(--arabic);font-size:18px;color:var(--muted);margin-top:4px">${ar.name}</div>
       <div class="surah-header-meta">
-        <span>${ar.numberOfAyahs} verses</span>
+        <span>${ar.numberOfAyahs} verzen</span>
         <span>${ar.revelationType}</span>
       </div>
     </div>`;
