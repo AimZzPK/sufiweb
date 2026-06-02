@@ -98,6 +98,12 @@ body::after {
   display:flex;align-items:center;justify-content:center;
   font-size:18px;flex-shrink:0;
 }
+.header-logo img{
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
+}
 .header-title{font-size:17px;font-weight:600;letter-spacing:-0.3px;flex:1}
 .header-meta{font-size:12px;color:var(--muted);font-weight:400}
 .back-btn{
@@ -404,9 +410,11 @@ footer .strong2 {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     Surahs
   </button>
-  <div class="header-logo" id="headerLogo">🕌</div>
+  <div class="header-logo" id="headerLogo">
+  <img src="logo.png" alt="logo">
+</div>
   <div style="flex:1">
-    <div class="header-title" id="headerTitle">Al-Quran</div>
+    <div class="header-title" id="headerTitle">Naqshbandi App</div>
     <div class="header-meta" id="headerMeta">114 Surahs</div>
   </div>
   <div id="reciterBadge" style="font-size:11px;color:var(--muted);background:var(--card);padding:5px 10px;border-radius:50px;border:1px solid var(--border);white-space:nowrap;cursor:pointer" onclick="cycleReciter()">Alafasy ▾</div>
@@ -664,10 +672,10 @@ function goBack(){
   $('surahView').style.display='none';
   $('listView').style.display='block';
   $('backBtn').style.display='none';
-  $('headerLogo').textContent='🕌';
+  $('headerLogo').innerHTML = `<img src="logo.png" alt="logo">`;
   $('headerLogo').style.background='var(--accent-dim)';
   $('headerLogo').style.border='1px solid rgba(74,222,128,0.2)';
-  $('headerTitle').textContent='Naqshbandi-Sufi App';
+  $('headerTitle').textContent='Naqshbandi App';
   $('headerMeta').textContent='114 Surahs';
   currentSurahData=null;audioIds=[];
 }
