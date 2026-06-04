@@ -579,6 +579,97 @@ footer .strong2 {
   section { padding: 24px 20px; }
   .doeroed-row { grid-template-columns: 1fr; }
 }
+/* DHIKR ROW */
+.dhikr-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  transition: all 0.2s;
+}
+
+.dhikr-row:hover {
+  background: rgba(201, 168, 76, 0.22);
+  border-color: rgba(201, 168, 76, 0.4);
+}
+
+.dhikr-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dhikr-count {
+  font-size: 10px;
+  color: var(--green-bright);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.dhikr-translation {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.dhikr-arabic {
+  font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+  font-size: 18px;
+  color: var(--text);
+  direction: rtl;
+  text-align: right;
+  line-height: 1.8;
+  flex-shrink: 0;
+  max-width: 55%;
+}
+
+/* GREEN ROW variant */
+.dhikr-row.green {
+  background: var(--primary-dim);
+  border-color: rgba(61, 232, 154, 0.2);
+}
+.dhikr-row.green:hover {
+  background: rgba(61, 232, 154, 0.2);
+  border-color: rgba(61, 232, 154, 0.35);
+}
+.dhikr-row.green .dhikr-arabic { color: var(--primary); }
+
+.section { display: flex; flex-direction: column; gap: 10px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.section-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 8px rgba(16,185,129,0.5);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: 'Amiri', serif;
+  font-size: 17px;
+  color: var(--gold);
+  letter-spacing: 0.3px;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-border), transparent);
+}
 </style>
 </head>
 <body>
@@ -791,53 +882,328 @@ footer .strong2 {
     <p style="margin:20px 0 10px;"><strong style="color:var(--text)">100× Durood-e-Khidri</strong></p>
     <div class="arabic">صَلَّى اللّٰهُ عَلٰی حَبِیْبِہٖ مُحَمَّدٍ وَّآلِہٖ وَسَلَّمَ</div>
 
-    <p style="margin:20px 0 10px;"><strong style="color:var(--text)">79× of 7× Surah Al-Inshirah</strong></p>
-    <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ ۝ وَوَضَعْنَا عَنكَ وِزْرَكَ ۝ الَّذِي أَنقَضَ ظَهْرَكَ ۝ وَرَفَعْنَا لَكَ ذِكْرَكَ ۝ فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ۝ إِنَّ مَعَ الْعُسْرِ يُسْرًا ۝ فَإِذَا فَرَغْتَ فَانصَبْ ۝ وَإِلَى رَبِّكَ فَارْغَب</div>
+    <div class="container">
 
-    <p style="margin:20px 0 10px;"><strong style="color:var(--text)">1001× of 10× Surah Al-Ikhlas</strong></p>
-    <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ۝ قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ</div>
-
-    <p style="margin:20px 0 10px;"><strong style="color:var(--text)">7× Surah Al-Fatihah + 100× Durood-e-Khidri</strong></p>
-    <p style="margin-top:20px;font-size:14px;color:var(--text-muted);">Gevolgd door de afsluitende smeekbeden:</p>
-
-    <div style="display:grid;gap:8px;margin-top:14px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--primary-dim2);border:1px solid var(--border);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Vervuller van behoeften</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا قَاضِیَ الْحَاجَاتِ</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--primary-dim2);border:1px solid var(--border);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Toereikende voor alle zorgen</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا كَافِیَ الْمُهِمَّاتِ</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--primary-dim2);border:1px solid var(--border);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Afwender van calamiteiten</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا دَافِعَ الْبَلِیَّاتِ</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--primary-dim2);border:1px solid var(--border);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Verheerder van rangen</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا رَافِعَ الدَّرَجَاتِ</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--primary-dim2);border:1px solid var(--border);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Genezer van ziekten</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا شَافِیَ الْاَمْرَاضِ</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--primary-dim2);border:1px solid var(--border);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Beantwoorder van gebeden</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا مُجِیْبَ الدَّعَواتِ</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--primary-dim2);border:1px solid var(--border);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Opener van deuren</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا مُفَتِّحَ الْاَبْوَابِ</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--primary-dim2);border:1px solid var(--border);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Zachtmoedige, oh Zachtmoedige</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا لَطِیْفُ يَا لَطِیْفُ</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--radius-sm);background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);">
-        <span style="font-size:13px;color:var(--text-muted);">Oh Beschermer van de angstigen, help mij</span>
-        <span style="font-family:'Noto Naskh Arabic',serif;font-size:17px;color:var(--text);direction:rtl;">يَا اَمَانَ الْخَائِفِیْنَ اَغِثْنِیْ</span>
-      </div>
+  <!-- OPENINGSSALAWAT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <span class="section-title">Opening — Salawat</span>
+      <div class="section-line"></div>
     </div>
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100× Daroed Khidri</span>
+        <span class="dhikr-translation">God's vrede en zegeningen zijn op Zijn Geliefde Muhammad en op zijn Familie en op zijn Metgezellen</span>
+      </div>
+      <div class="dhikr-arabic">صَلَّى اللهُ عَلَى حَبِيبِهِ مُحَمَّدٍ وَآلِهِ وَأَصْحَابِهِ وَسَلَّمَ</div>
+    </div>
+  </div>
+
+  <!-- SURAH INSHIRAH -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <span class="section-title">Surah Al-Inshirah</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">79×</span>
+        <span class="dhikr-translation">Hebben Wij jouw borst niet verruimd? En Wij hebben jouw aanzien vergroot. Waarlijk, met het ongemak komt zeker gemak.</span>
+      </div>
+      <div class="dhikr-arabic">أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ وَوَضَعْنَا عَنكَ وِزْرَكَ الَّذِي أَنقَضَ ظَهْرَكَ وَرَفَعْنَا لَكَ ذِكْرَكَ فَإِنَّ مَعَ الْعُسْرِ يُسْرًا إِنَّ مَعَ الْعُسْرِ يُسْرًا فَإِذَا فَرَغْتَ فَانصَبْ وَإِلَىٰ رَبِّكَ فَارْغَب</div>
+    </div>
+  </div>
+
+  <!-- SURAH IKHLAS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <span class="section-title">Surah Al-Ikhlas</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">1000×</span>
+        <span class="dhikr-translation">Zeg: Hij is Allah, de Enige. Allah is de Enige van Wie al het geschapene afhankelijk is. Hij heeft niet verwekt, noch is Hij verwekt. En niet één is aan Hem gelijk.</span>
+      </div>
+      <div class="dhikr-arabic">قُلْ هُوَ اللَّهُ أَحَدٌ اللَّهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ</div>
+    </div>
+  </div>
+
+  <!-- SURAH FATIHA -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <span class="section-title">Surah Al-Fatihah</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">7×</span>
+        <span class="dhikr-translation">Alle lof zij Allah, de Heer der Werelden. De Meest Barmhartige, de Meest Genadevolle. De Heerser op de Dag des Oordeels. U alleen aanbidden wij en U alleen vragen wij om hulp. Leid ons op het rechte pad.</span>
+      </div>
+      <div class="dhikr-arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ الرَّحْمَٰنِ الرَّحِيمِ مَالِكِ يَوْمِ الدِّينِ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</div>
+    </div>
+  </div>
+
+  <!-- TASBIH -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <span class="section-title">Dhikr & Tasbih</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Er is geen God dan U. Alle lof is aan U. Ik behoorde inderdaad tot de onrechtvaardigen.</span>
+      </div>
+      <div class="dhikr-arabic">لَا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ</div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Er is geen God, behalve Allah!</span>
+      </div>
+      <div class="dhikr-arabic">لَا إِلَٰهَ إِلَّا اللَّهُ</div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Allah!</span>
+      </div>
+      <div class="dhikr-arabic">يَا اللَّهُ</div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Meest Eerwaardige!</span>
+      </div>
+      <div class="dhikr-arabic">يَا عَزِيزُ</div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Liefhebbende!</span>
+      </div>
+      <div class="dhikr-arabic">يَا وَدُودُ</div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Groothartige!</span>
+      </div>
+      <div class="dhikr-arabic">يَا كَرِيمُ</div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Gever!</span>
+      </div>
+      <div class="dhikr-arabic">يَا وَهَّابُ</div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Eeuwiglevende! Oh Zelfbestaande!</span>
+      </div>
+      <div class="dhikr-arabic">يَا حَيُّ يَا قَيُّومُ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Allah is genoeg voor ons en Hij is de beste beschermer. De beste Beschermer en de Beste Helper.</span>
+      </div>
+      <div class="dhikr-arabic">حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ نِعْمَ الْمَوْلَىٰ وَنِعْمَ النَّصِيرُ</div>
+    </div>
+  </div>
+
+  <!-- ASMA UL HUSNA / DUA -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <span class="section-title">Smeekbedes — Yā Qādhiy</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="note-box">
+      In groepsverband: lees beurtelings. Alleen: lees elk 100 keer. Na Lā ilāha ill-Allāh lees je Ṣallahu Alayhi wa Sallam.
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Vervuller van behoeftigheden!</span>
+      </div>
+      <div class="dhikr-arabic">يَا قَاضِيَ الْحَاجَاتِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Weerhouder van rampen!</span>
+      </div>
+      <div class="dhikr-arabic">يَا دَافِعَ الْبَلِيَّاتِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Oplosser van problemen!</span>
+      </div>
+      <div class="dhikr-arabic">يَا حَالَّ الْمُشْكِلَاتِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Voldoener van benodigdheden!</span>
+      </div>
+      <div class="dhikr-arabic">يَا كَافِيَ الْمُهِمَّاتِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Genezer van ziektes!</span>
+      </div>
+      <div class="dhikr-arabic">يَا شَافِيَ الْأَمْرَاضِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Verstuurder van zegeningen!</span>
+      </div>
+      <div class="dhikr-arabic">يَا مُنَزِّلَ الْبَرَكَاتِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Veroorzaker van alle oorzaken!</span>
+      </div>
+      <div class="dhikr-arabic">يَا مُسَبِّبَ الْأَسْبَابِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Verhoger van statussen!</span>
+      </div>
+      <div class="dhikr-arabic">يَا رَافِعَ الدَّرَجَاتِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Verhoorder van smeekbedes!</span>
+      </div>
+      <div class="dhikr-arabic">يَا مُجِيبَ الدَّعَوَاتِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Beschermer van de vrezenden!</span>
+      </div>
+      <div class="dhikr-arabic">يَا أَمَانَ الْخَائِفِينَ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Beste Helper!</span>
+      </div>
+      <div class="dhikr-arabic">يَا خَيْرَ النَّاصِرِينَ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Gids van de verwonderden!</span>
+      </div>
+      <div class="dhikr-arabic">يَا دَلِيلَ الْمُتَحَيِّرِينَ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Helper van de helpenden! Help ons!</span>
+      </div>
+      <div class="dhikr-arabic">يَا غِيَاثَ الْمُسْتَغِيثِينَ أَغِثْنَا</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Trooster van de rouwenden!</span>
+      </div>
+      <div class="dhikr-arabic">يَا مُفَرِّحَ الْمَحْزُونِينَ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Mijn Heer! Help mij, want ik ben overmeesterd!</span>
+      </div>
+      <div class="dhikr-arabic">رَبِّ إِنِّي مَغْلُوبٌ فَانتَصِرْ</div>
+    </div>
+  </div>
+
+  <!-- AFSLUITENDE DHIKR -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <span class="section-title">Afsluitende Dhikr</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Allah! Oh Meest Barmhartige! Oh Meest Genadevolle! Oh Meest Barmhartige der Barmharigen!</span>
+      </div>
+      <div class="dhikr-arabic">يَا اللَّهُ يَا رَحْمَانُ يَا رَحِيمُ يَا أَرْحَمَ الرَّاحِمِينَ</div>
+    </div>
+
+    <div class="dhikr-row green">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Ere zij aan Allah en alle lof aan Allah, er is geen God dan Allah, en Allah is de Grootste. En er is geen macht of kracht, behalve met de wil van Allah.</span>
+      </div>
+      <div class="dhikr-arabic">سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَٰهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100×</span>
+        <span class="dhikr-translation">Oh Allah, sluier mij met Uw prachtige sluier!</span>
+      </div>
+      <div class="dhikr-arabic">اللَّهُمَّ اسْتُرْنِي بِسِتْرِكَ الْجَمِيلِ</div>
+    </div>
+
+    <div class="dhikr-row">
+      <div class="dhikr-left">
+        <span class="dhikr-count">100× Daroed Khidri</span>
+        <span class="dhikr-translation">God's vrede en zegeningen zijn op Zijn Geliefde Muhammad en op zijn Familie en op zijn Metgezellen.</span>
+      </div>
+      <div class="dhikr-arabic">صَلَّى اللهُ عَلَى حَبِيبِهِ مُحَمَّدٍ وَآلِهِ وَأَصْحَابِهِ وَسَلَّمَ</div>
+    </div>
+  </div>
+
+</div>
   </section>
 
   <!-- SADJRAH -->
@@ -1042,6 +1408,8 @@ moge het zijn in de staat van Uw aanbidding (Ameen)
   <a href="index.html" class="nav-item"><i class="ri-home-4-line"></i>Home</a>
   <a href="home.html" class="nav-item active"><i class="ri-book-2-line"></i>Handleiding</a>
   <a href="quran.html" class="nav-item"><i class="ri-quill-pen-line"></i>Quran</a>
+  <a href="chatbot.html" class="nav-item"><i class="ri-robot-line"></i>AI</a>
+  <a href="memorize.html" class="nav-item"><i class="ri-brain-line"></i>Memorize</a>
 </nav>
 
 <script>

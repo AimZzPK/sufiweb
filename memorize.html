@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/jpeg" href="Logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memorize – Naqshbandi App</title>
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#010f0a; --surface:#0d1a12;
+  --card:rgba(14,36,20,0.75);
+  --border:rgba(0,200,100,0.12); --border2:rgba(0,200,100,0.22);
+  --primary:#3de89a; --primary-dim:rgba(61,232,154,0.15); --primary-dim2:rgba(61,232,154,0.08);
+  --gold:#c9a84c; --gold-dim:rgba(201,168,76,0.15);
+  --text:#dff0e5; --muted:#7aad8f; --dim:#4a7a5e;
+  --font:'Outfit',sans-serif; --arabic:'Scheherazade New',serif;
+  --radius:16px; --radius-sm:10px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --again:#e05a5a; --hard:#e0a24a; --good:#4ade80; --easy:#60b4f8;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 10%,rgba(6,95,70,0.35) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(2,44,34,0.5) 0%,transparent 60%),radial-gradient(ellipse 100% 100% at 50% 50%,#010f0a 0%,#000 100%);z-index:-2;pointer-events:none}
+body::after{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(60deg,transparent,transparent 40px,rgba(16,185,129,0.025) 40px,rgba(16,185,129,0.025) 41px),repeating-linear-gradient(-60deg,transparent,transparent 40px,rgba(16,185,129,0.025) 40px,rgba(16,185,129,0.025) 41px);z-index:-1;pointer-events:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
+.header{position:sticky;top:0;z-index:50;padding:16px 20px 14px;background:rgba(1,15,10,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.header-logo{width:34px;height:34px;border-radius:10px;background:var(--bg);border:1px solid rgba(74,222,128,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.header-logo img{width:22px;height:22px;object-fit:contain;display:block}
+.header-title{font-size:17px;font-weight:600;letter-spacing:-0.3px;flex:1}
+.header-meta{font-size:12px;color:var(--muted);font-weight:400}
+.back-btn{display:none;align-items:center;gap:6px;font-size:14px;color:var(--primary);font-weight:500;cursor:pointer;background:none;border:none;padding:6px 10px 6px 0;flex-shrink:0}
+
+main{max-width:680px;margin:0 auto;padding:16px 16px 140px}
+
+/* PICK */
+.pick-hero{text-align:center;padding:24px 0 16px}
+.pick-hero h1{font-size:24px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px}
+.pick-hero p{font-size:14px;color:var(--muted);line-height:1.6}
+.stats-row{display:flex;gap:10px;margin:16px 0}
+.stat-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 12px;text-align:center}
+.stat-box .n{font-size:22px;font-weight:600;color:var(--primary)}
+.stat-box .l{font-size:11px;color:var(--muted);margin-top:2px}
+.section-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);padding:16px 0 8px}
+.surah-list{display:flex;flex-direction:column;gap:6px}
+.surah-pick-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .15s,border-color .15s;position:relative;overflow:hidden}
+.surah-pick-item:hover{border-color:var(--border2);background:rgba(20,48,28,0.9)}
+.snum{width:36px;height:36px;flex-shrink:0;background:var(--primary-dim2);border:1px solid rgba(74,222,128,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--primary)}
+.sinfo{flex:1;min-width:0}
+.sname{font-size:14px;font-weight:500}
+.ssub{font-size:12px;color:var(--muted);margin-top:2px}
+.sarabic{font-family:var(--arabic);font-size:22px;color:var(--primary);flex-shrink:0}
+.progress-mini{position:absolute;bottom:0;left:0;height:2px;background:var(--primary);border-radius:0 0 0 var(--radius)}
+.due-badge{padding:3px 8px;border-radius:50px;font-size:10px;font-weight:600;background:var(--gold-dim);color:var(--gold);flex-shrink:0}
+
+/* STUDY */
+#studyView{display:none}
+.study-top{display:flex;align-items:center;justify-content:space-between;padding:8px 0 10px}
+.study-label{font-size:12px;color:var(--muted)}
+.prog-bar{height:4px;background:var(--border);border-radius:4px;margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;background:var(--primary);border-radius:4px;transition:width .4s ease}
+
+/* FLASH CARD */
+.flash-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 20px 24px;margin-bottom:14px;animation:cardIn .3s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(0.98)}to{opacity:1;transform:none}}
+@keyframes cardOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-10px) scale(0.98)}}
+
+.card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:50px;font-size:11px;font-weight:600;background:var(--primary-dim2);color:var(--primary)}
+.stage-badge{padding:3px 10px;border-radius:50px;font-size:10px;font-weight:600;border:1px solid}
+
+/* stage colors */
+.stage-0{background:rgba(224,90,90,0.1);color:var(--again);border-color:rgba(224,90,90,0.25)}
+.stage-1{background:rgba(224,162,74,0.1);color:var(--hard);border-color:rgba(224,162,74,0.25)}
+.stage-2{background:rgba(74,222,128,0.1);color:var(--good);border-color:rgba(74,222,128,0.25)}
+.stage-3{background:rgba(96,180,248,0.1);color:var(--easy);border-color:rgba(96,180,248,0.25)}
+
+/* ARABIC TEXT with blanks */
+.ayah-text{font-family:var(--arabic);font-size:30px;line-height:2.2;text-align:right;direction:rtl;word-spacing:6px}
+.word-visible{color:var(--text)}
+.word-blank{
+  display:inline-block;
+  background:rgba(61,232,154,0.12);
+  border:1px dashed rgba(61,232,154,0.3);
+  border-radius:6px;
+  min-width:60px;
+  height:38px;
+  vertical-align:middle;
+  margin:0 4px;
+}
+.word-revealed{
+  color:var(--primary);
+  text-decoration:underline;
+  text-decoration-style:dotted;
+  text-underline-offset:4px;
+  animation:wordPop .3s ease both;
+}
+@keyframes wordPop{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:none}}
+
+/* AUDIO BTN */
+.audio-row{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+.audio-btn{display:flex;align-items:center;gap:7px;padding:9px 16px;background:var(--primary-dim2);border:1px solid var(--border2);border-radius:50px;font-size:13px;color:var(--primary);cursor:pointer;font-family:var(--font);transition:background .15s;flex-shrink:0}
+.audio-btn:hover{background:var(--primary-dim)}
+.audio-btn.playing{background:var(--primary);color:#010f0a}
+.audio-hint{font-size:12px;color:var(--dim);flex:1}
+
+/* ACTIONS */
+.reveal-btn{width:100%;padding:15px;background:var(--primary-dim);border:1px solid var(--border2);border-radius:var(--radius);font-size:15px;font-weight:500;color:var(--primary);cursor:pointer;font-family:var(--font);transition:background .15s;margin-bottom:10px}
+.reveal-btn:hover{background:rgba(61,232,154,0.22)}
+
+.rating-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;animation:fadeIn .2s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.rate-btn{padding:12px 4px;border-radius:var(--radius-sm);border:1px solid;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font);display:flex;flex-direction:column;align-items:center;gap:3px;transition:transform .1s}
+.rate-btn:active{transform:scale(0.96)}
+.rate-btn .ivl{font-size:10px;font-weight:400;opacity:0.7}
+.rate-btn.again{background:rgba(224,90,90,0.12);border-color:rgba(224,90,90,0.3);color:var(--again)}
+.rate-btn.hard {background:rgba(224,162,74,0.12);border-color:rgba(224,162,74,0.3);color:var(--hard)}
+.rate-btn.good {background:rgba(74,222,128,0.12);border-color:rgba(74,222,128,0.3);color:var(--good)}
+.rate-btn.easy {background:rgba(96,180,248,0.12);border-color:rgba(96,180,248,0.3);color:var(--easy)}
+
+/* DONE */
+.done-card{text-align:center;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:40px 24px;animation:cardIn .3s ease both}
+.done-icon{font-size:52px;margin-bottom:16px}
+.done-card h2{font-size:22px;font-weight:600;margin-bottom:8px}
+.done-card p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:24px}
+.done-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+.done-stat .n{font-size:20px;font-weight:600}
+.done-stat .l{font-size:11px;color:var(--muted);margin-top:2px}
+.done-stat{background:var(--primary-dim2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 8px}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;background:var(--primary);border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;color:#010f0a;cursor:pointer;font-family:var(--font);width:100%;margin-bottom:8px;transition:opacity .15s}
+.btn-primary:hover{opacity:0.9}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;background:none;border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:14px;color:var(--text);cursor:pointer;font-family:var(--font);width:100%;transition:background .15s}
+.btn-ghost:hover{background:var(--primary-dim2)}
+
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:16px;color:var(--muted);font-size:14px}
+.spinner{width:32px;height:32px;border:2px solid var(--border2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.navbar{position:fixed;bottom:0;left:0;right:0;background:rgba(6,14,9,0.9);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;justify-content:center;gap:8px;padding:10px 20px;z-index:800}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 16px;border-radius:var(--radius-sm);text-decoration:none;color:var(--dim);font-size:11px;transition:all .2s}
+.nav-item i{font-size:20px}
+.nav-item:hover,.nav-item.active{color:var(--primary);background:var(--primary-dim2)}
+footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:12px;letter-spacing:1px;border-top:1px solid var(--border)}
+footer .strong2{color:var(--gold);font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <button class="back-btn" id="backBtn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Surahs
+  </button>
+  <div class="header-logo" id="headerLogo"><img src="Logo.png" alt="logo"></div>
+  <div style="flex:1">
+    <div class="header-title" id="headerTitle">Memorize</div>
+    <div class="header-meta" id="headerMeta">Spaced Repetition</div>
+  </div>
+</header>
+
+<main>
+  <div id="pickView">
+    <div class="pick-hero">
+      <h1>Hifz Trainer</h1>
+      <p>Memorize the Arabic. Cards get harder<br>as you improve — words hide progressively.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="n" id="statLearned">0</div><div class="l">Memorized</div></div>
+      <div class="stat-box"><div class="n" id="statDue">0</div><div class="l">Due Today</div></div>
+      <div class="stat-box"><div class="n" id="statStreak">0</div><div class="l">Day Streak</div></div>
+    </div>
+    <div class="section-title">Choose a Surah</div>
+    <div class="surah-list" id="surahList">
+      <div class="loading"><div class="spinner"></div>Loading…</div>
+    </div>
+    <footer>© 2026 <strong class="strong2">Naqshbandi Sufi</strong> | W.Idoe</footer>
+  </div>
+
+  <div id="studyView">
+    <div class="study-top">
+      <span class="study-label" id="studyLabel">—</span>
+      <span class="study-label" id="studyRemaining">—</span>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+    <div id="cardArea"></div>
+  </div>
+</main>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-item"><i class="ri-home-4-line"></i>Home</a>
+  <a href="home.html" class="nav-item"><i class="ri-book-2-line"></i>Handleiding</a>
+  <a href="quran.html" class="nav-item"><i class="ri-quill-pen-line"></i>Quran</a>
+  <a href="chatbot.html" class="nav-item"><i class="ri-robot-line"></i>AI</a>
+  <a href="memorize.html" class="nav-item active"><i class="ri-brain-line"></i>Memorize</a>
+</nav>
+
+<script>
+/* ═══════════════════════════════════════
+   SM-2 ALGORITHM
+   quality: 0=Again 1=Hard 2=Hard 3=Good 4=Good 5=Easy
+═══════════════════════════════════════ */
+function sm2(card, quality) {
+  let {interval=1, repetitions=0, efactor=2.5} = card;
+  if (quality < 3) {
+    repetitions = 0; interval = 1;
+  } else {
+    if (repetitions === 0) interval = 1;
+    else if (repetitions === 1) interval = 6;
+    else interval = Math.round(interval * efactor);
+    repetitions++;
+    efactor = Math.max(1.3, efactor + 0.1 - (5-quality)*(0.08+(5-quality)*0.02));
+  }
+  return {...card, interval, repetitions, efactor,
+    nextDue: Date.now() + interval*86400000, lastSeen: Date.now()};
+}
+
+function intervalLabel(card, quality) {
+  const c = sm2({...card}, quality);
+  if (c.interval <= 1) return '<1d';
+  return c.interval + 'd';
+}
+
+/* ═══════════════════════════════════════
+   HIDE STAGE — how much Arabic is hidden
+   Based on repetitions count:
+   0      → stage 0: last 25% of words hidden
+   1-2    → stage 1: last 50% hidden
+   3-5    → stage 2: last 75% hidden
+   6+     → stage 3: everything hidden (full recall)
+═══════════════════════════════════════ */
+function hideStage(repetitions) {
+  if (repetitions === 0) return 0;
+  if (repetitions <= 2) return 1;
+  if (repetitions <= 5) return 2;
+  return 3;
+}
+
+const STAGE_LABELS = ['Beginner','Learning','Advanced','Mastered'];
+const STAGE_CLASSES = ['stage-0','stage-1','stage-2','stage-3'];
+const STAGE_HIDE = [0.25, 0.5, 0.75, 1.0]; // fraction of words to hide
+
+/* ═══════════════════════════════════════
+   PERSISTENCE
+═══════════════════════════════════════ */
+const DB_KEY = 'naqsh_hifz_v1';
+let db = JSON.parse(localStorage.getItem(DB_KEY)||'{}');
+
+function getCard(sNum, aNum) {
+  if (!db[sNum]) db[sNum] = {};
+  if (!db[sNum][aNum]) db[sNum][aNum] = {interval:1,repetitions:0,efactor:2.5,nextDue:0,lastSeen:0};
+  return db[sNum][aNum];
+}
+function saveCard(sNum, aNum, card) {
+  if (!db[sNum]) db[sNum] = {};
+  db[sNum][aNum] = card;
+  localStorage.setItem(DB_KEY, JSON.stringify(db));
+}
+function isDue(c) { return c.nextDue <= Date.now(); }
+
+function totalLearned() {
+  let n=0;
+  for (const s of Object.values(db))
+    for (const c of Object.values(s)) if (c.repetitions>0) n++;
+  return n;
+}
+function dueForSurah(sNum, total) {
+  let n=0;
+  for (let i=1;i<=total;i++) if (isDue(getCard(sNum,i))) n++;
+  return n;
+}
+function totalDueAll(surahs) {
+  return surahs.reduce((s,x)=>s+dueForSurah(x.number,x.numberOfAyahs),0);
+}
+
+/* STREAK */
+function touchStreak() {
+  const today = new Date().toDateString();
+  let d = JSON.parse(localStorage.getItem('naqsh_streak2')||'{}');
+  if (d.lastDay===today) return d.streak||1;
+  const yest = new Date(Date.now()-86400000).toDateString();
+  const streak = d.lastDay===yest ? (d.streak||0)+1 : 1;
+  localStorage.setItem('naqsh_streak2', JSON.stringify({streak, lastDay:today}));
+  return streak;
+}
+function getStreak() {
+  return (JSON.parse(localStorage.getItem('naqsh_streak2')||'{}')).streak||0;
+}
+
+/* ═══════════════════════════════════════
+   GLOBALS
+═══════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+let allSurahs = [];
+let activeSurah = null, ayahData = [];
+let queue = [], sessionTotal = 0;
+let sessionStats = {again:0, hard:0, good:0, easy:0};
+let currentAudio = null;
+const RECITER = 'ar.alafasy';
+
+/* ═══════════════════════════════════════
+   BOOT
+═══════════════════════════════════════ */
+fetch('https://api.alquran.cloud/v1/surah')
+  .then(r=>r.json()).then(d=>{ allSurahs=d.data; renderPick(); });
+
+/* ═══════════════════════════════════════
+   PICK SCREEN
+═══════════════════════════════════════ */
+function renderPick() {
+  $('statLearned').textContent = totalLearned();
+  $('statDue').textContent = totalDueAll(allSurahs);
+  $('statStreak').textContent = getStreak();
+  const list = $('surahList');
+  list.innerHTML = '';
+  allSurahs.forEach(s => {
+    const due = dueForSurah(s.number, s.numberOfAyahs);
+    const learned = Object.values(db[s.number]||{}).filter(c=>c.repetitions>0).length;
+    const pct = Math.round((learned/s.numberOfAyahs)*100);
+    const div = document.createElement('div');
+    div.className = 'surah-pick-item';
+    div.innerHTML = `
+      <div class="snum">${s.number}</div>
+      <div class="sinfo">
+        <div class="sname">${s.englishName}</div>
+        <div class="ssub">${s.numberOfAyahs} ayahs · ${pct}% memorized</div>
+      </div>
+      ${due>0?`<span class="due-badge">${due} due</span>`:''}
+      <div class="sarabic">${s.name}</div>
+      ${pct>0?`<div class="progress-mini" style="width:${pct}%"></div>`:''}
+    `;
+    div.onclick = ()=>startStudy(s);
+    list.appendChild(div);
+  });
+}
+
+/* ═══════════════════════════════════════
+   STUDY SESSION
+═══════════════════════════════════════ */
+async function startStudy(surah) {
+  activeSurah = surah;
+  $('pickView').style.display = 'none';
+  $('studyView').style.display = 'block';
+  $('backBtn').style.display = 'flex';
+  $('headerTitle').textContent = surah.englishName;
+  $('headerMeta').textContent = surah.name;
+  $('cardArea').innerHTML = `<div class="loading"><div class="spinner"></div>Loading ayahs…</div>`;
+
+  // Fetch Arabic only (no translation needed for hifz)
+  const res = await fetch(`https://api.alquran.cloud/v1/surah/${surah.number}/quran-uthmani`);
+  const data = await res.json();
+  ayahData = data.data.ayahs.map(a=>({
+    num: a.numberInSurah,
+    globalNum: a.number,
+    arabic: a.text,
+    words: a.text.trim().split(/\s+/)
+  }));
+
+  buildQueue();
+  sessionStats = {again:0,hard:0,good:0,easy:0};
+  sessionTotal = queue.length;
+  showNextCard();
+}
+
+function buildQueue() {
+  const due=[], newCards=[];
+  for (const a of ayahData) {
+    const c = getCard(activeSurah.number, a.num);
+    if (c.repetitions===0 && c.lastSeen===0) newCards.push(a.num);
+    else if (isDue(c)) due.push(a.num);
+  }
+  queue = [...due, ...newCards].slice(0, 20);
+}
+
+/* ═══════════════════════════════════════
+   RENDER CARD
+═══════════════════════════════════════ */
+function showNextCard() {
+  stopAudio();
+  if (queue.length===0) { showDone(); return; }
+
+  const ayahNum = queue[0];
+  const a = ayahData.find(x=>x.num===ayahNum);
+  const card = getCard(activeSurah.number, ayahNum);
+  const stage = hideStage(card.repetitions);
+  const hideFrac = STAGE_HIDE[stage];
+
+  // Progress
+  const done = sessionTotal - queue.length;
+  $('progFill').style.width = (sessionTotal>0?(done/sessionTotal)*100:0)+'%';
+  $('studyLabel').textContent = `Ayah ${ayahNum} / ${ayahData.length}`;
+  $('studyRemaining').textContent = `${queue.length} left`;
+
+  // Split words — hide last hideFrac
+  const words = a.words;
+  const totalWords = words.length;
+  const hideFrom = Math.max(1, Math.round(totalWords * (1 - hideFrac)));
+  // For stage 3 hide everything
+  const hideFromActual = stage===3 ? 0 : hideFrom;
+
+  const arabicHTML = words.map((w,i)=>
+    i >= hideFromActual
+      ? `<span class="word-blank" data-word="${encodeURIComponent(w)}" data-idx="${i}"></span>`
+      : `<span class="word-visible">${w}</span>`
+  ).join(' ');
+
+  // Interval previews
+  const ivlAgain = intervalLabel(card,1);
+  const ivlHard  = intervalLabel(card,3);
+  const ivlGood  = intervalLabel(card,4);
+  const ivlEasy  = intervalLabel(card,5);
+
+  const audioUrl = `https://cdn.islamic.network/quran/audio/128/${RECITER}/${a.globalNum}.mp3`;
+
+  $('cardArea').innerHTML = `
+    <div class="flash-card" id="flashCard">
+      <div class="card-meta">
+        <span class="card-tag"><i class="ri-quill-pen-line"></i> ${activeSurah.englishName} · ${activeSurah.number}:${ayahNum}</span>
+        <span class="stage-badge ${STAGE_CLASSES[stage]}">${STAGE_LABELS[stage]}</span>
+      </div>
+
+      <div class="ayah-text" id="ayahText" dir="rtl">${arabicHTML}</div>
+
+      <div class="audio-row">
+        <button class="audio-btn" id="audioBtn" onclick="toggleAudio('${audioUrl}')">
+          <i class="ri-play-circle-line"></i> Listen
+        </button>
+        <span class="audio-hint">
+          ${stage===3
+            ? 'Full recall — recite the ayah from memory'
+            : stage===2
+              ? 'Last ¾ hidden — recall the ending'
+              : stage===1
+                ? 'Second half hidden — complete the ayah'
+                : 'Last few words hidden — fill them in'
+          }
+        </span>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealCard()">
+      <i class="ri-eye-line"></i> Reveal Hidden Words
+    </button>
+    <div id="ratingArea" style="display:none">
+      <div class="rating-row">
+        <button class="rate-btn again" onclick="rateCard(1)">Again<span class="ivl">${ivlAgain}</span></button>
+        <button class="rate-btn hard"  onclick="rateCard(3)">Hard<span class="ivl">${ivlHard}</span></button>
+        <button class="rate-btn good"  onclick="rateCard(4)">Good<span class="ivl">${ivlGood}</span></button>
+        <button class="rate-btn easy"  onclick="rateCard(5)">Easy<span class="ivl">${ivlEasy}</span></button>
+      </div>
+    </div>
+  `;
+}
+
+function revealCard() {
+  // Animate blanks → revealed words
+  const blanks = document.querySelectorAll('.word-blank');
+  blanks.forEach((el, i) => {
+    setTimeout(() => {
+      const word = decodeURIComponent(el.getAttribute('data-word'));
+      const span = document.createElement('span');
+      span.className = 'word-revealed';
+      span.textContent = word;
+      el.replaceWith(span);
+    }, i * 80);
+  });
+  $('revealBtn').style.display = 'none';
+  setTimeout(()=>{ $('ratingArea').style.display='block'; }, blanks.length*80+100);
+}
+
+function rateCard(quality) {
+  stopAudio();
+  const ayahNum = queue.shift();
+  const old = getCard(activeSurah.number, ayahNum);
+  const updated = sm2({...old}, quality);
+  saveCard(activeSurah.number, ayahNum, updated);
+  touchStreak();
+
+  if (quality<=1) sessionStats.again++;
+  else if (quality<=3) sessionStats.hard++;
+  else if (quality<=4) sessionStats.good++;
+  else sessionStats.easy++;
+
+  // Re-queue if Again/Hard (but don't keep looping forever)
+  if (quality < 3 && queue.filter(n=>n===ayahNum).length===0 && queue.length<15) {
+    const insertAt = Math.min(3, queue.length);
+    queue.splice(insertAt, 0, ayahNum);
+  }
+
+  const fc = $('flashCard');
+  if (fc) { fc.style.animation='cardOut .22s ease both'; }
+  setTimeout(showNextCard, 200);
+}
+
+/* ═══════════════════════════════════════
+   AUDIO
+═══════════════════════════════════════ */
+function toggleAudio(url) {
+  const btn = $('audioBtn');
+  if (currentAudio && !currentAudio.paused) {
+    currentAudio.pause();
+    currentAudio = null;
+    btn.innerHTML = '<i class="ri-play-circle-line"></i> Listen';
+    btn.classList.remove('playing');
+    return;
+  }
+  stopAudio();
+  currentAudio = new Audio(url);
+  currentAudio.play();
+  btn.innerHTML = '<i class="ri-pause-circle-line"></i> Pause';
+  btn.classList.add('playing');
+  currentAudio.onended = () => {
+    btn.innerHTML = '<i class="ri-play-circle-line"></i> Listen';
+    btn.classList.remove('playing');
+    currentAudio = null;
+  };
+}
+
+function stopAudio() {
+  if (currentAudio) { currentAudio.pause(); currentAudio=null; }
+}
+
+/* ═══════════════════════════════════════
+   DONE SCREEN
+═══════════════════════════════════════ */
+function showDone() {
+  $('progFill').style.width = '100%';
+  $('studyLabel').textContent = 'Done!';
+  $('studyRemaining').textContent = '';
+  $('cardArea').innerHTML = `
+    <div class="done-card">
+      <div class="done-icon">✦</div>
+      <h2>Session Complete</h2>
+      <p>Bārakallāhu fīk — well done on<br><strong>${activeSurah.englishName}</strong>.</p>
+      <div class="done-stats">
+        <div class="done-stat"><div class="n" style="color:var(--again)">${sessionStats.again}</div><div class="l">Again</div></div>
+        <div class="done-stat"><div class="n" style="color:var(--good)">${sessionStats.good}</div><div class="l">Good</div></div>
+        <div class="done-stat"><div class="n" style="color:var(--easy)">${sessionStats.easy}</div><div class="l">Easy</div></div>
+      </div>
+      <button class="btn-primary" onclick="startStudy(activeSurah)"><i class="ri-refresh-line"></i> Study Again</button>
+      <button class="btn-ghost" onclick="goBack()">← Back to Surahs</button>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+function goBack() {
+  stopAudio();
+  $('studyView').style.display='none';
+  $('pickView').style.display='block';
+  $('backBtn').style.display='none';
+  $('headerTitle').textContent='Memorize';
+  $('headerMeta').textContent='Spaced Repetition';
+  activeSurah=null; ayahData=[]; queue=[];
+  renderPick();
+}
+$('backBtn').addEventListener('click', goBack);
+</script>
+</body>
+</html>
